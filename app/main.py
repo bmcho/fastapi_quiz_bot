@@ -1,26 +1,29 @@
 from fastapi import FastAPI
-
-from app import models
-from lib.telegram import Telegram
-from app.config import settings
+from app import api
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
-telegram = Telegram(settings.TELEGRAM_BOT_TOKEN)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins={"*"},
+    allow_credentials=True,
+    allow_methods={"OPTION", "GET", "POST"},
+    allow_headers={"*"},
+)
 
 
 @app.on_event("startup")
 def on_startup():
     from app.database import engine
+    from app import models
 
     models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
-async def hello():
-    return b"hello World"
+async def healthcheck():
+    return {"ok": "True"}
 
 
-@app.get("/me")
-async def get_me():
-    return await telegram.get_bot_info()
+app.include_router(api.router)
