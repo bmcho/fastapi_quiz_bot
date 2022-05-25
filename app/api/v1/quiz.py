@@ -25,4 +25,4 @@ async def create_quiz(data: schemas.QuizCreate, db: Session = Depends(get_db)):
 
 @router.get("/random", response_model=schemas.Quiz)
 async def get_quiz_rendomly(db: Session = Depends(get_db)):
-    db.query(models.Quiz).order_by(func.RAND()).first()
+    return db.query(models.Quiz).order_by(func.RAND()).first()

@@ -13,12 +13,12 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-def on_startup():
-    from app.database import engine
-    from app import models
+# @app.on_event("startup")
+# def on_startup():
+#     from app.database import engine
+#     from app import models
 
-    models.Base.metadata.create_all(bind=engine)
+#     models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
