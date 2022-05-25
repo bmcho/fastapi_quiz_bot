@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, Request, Depends
 from pydantic import HttpUrl
-from sqlalchemy.orm.session import Session
 from sqlalchemy import func
+from sqlalchemy.orm.session import Session
 
 from app import models, schemas
 from app.config import settings
@@ -12,17 +12,15 @@ router = APIRouter()
 bot = telegram.Telegram(settings.TELEGRAM_BOT_TOKEN)
 
 
-def add_user(user: schemas.User, db: Session = Depends(get_db)) -> models.User:
+def add_user(user: schemas.User, db: Session) -> models.User:
     row = models.User(
         id=user.id,
         username=user.username,
         first_name=user.first_name,
         last_name=user.last_name,
     )
-
     db.add(row)
     db.commit()
-
     return row
 
 
@@ -36,20 +34,26 @@ async def set_webhook(url: HttpUrl = Body(..., embed=True)):
     return await bot.set_webhook(url)
 
 
-@router.post(f"/{settings.TELEGRAM_BOT_TOKEN.get_secret_value()}")
+@router.post(f"/webhook-token")
 async def webhook(request: Request, db: Session = Depends(get_db)):
-    resp = await request.json()
-    update = telegram.schema.Update.parse_obj(resp)
+    req = await request.json()
+    print(req)
+    update = telegram.schemas.Update.parse_obj(req)
     message = update.message
     user = update.message.from_
     db_user = db.query(models.User).filter_by(id=user.id).first()
 
     if not db_user:
-        add_user(user, db)
+        db_user = add_user(user, db)
 
     msg = "✨ '문제' 또는 '퀴즈'라고 말씀하시면 문제를 냅니다!"
     if "문제" in message.text or "퀴즈" in message.text:
         quiz = db.query(models.Quiz).order_by(func.RAND()).first()
+
+        if not quiz:
+            await bot.send_message(message.chat.id, "퀴즈가 없습니다")
+            return
+
         db_user.quiz_id = quiz.id
         msg = f"{quiz.question}\n\n{quiz.content}"
     elif db_user.quiz_id and message.text.isnumeric():

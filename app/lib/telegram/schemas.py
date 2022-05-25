@@ -22,7 +22,7 @@ class User(BaseModel):
     is_bot: bool
     first_name: str
     last_name: str
-    username: str
+    username: Optional[str]
     language_code: str
 
 

@@ -36,5 +36,4 @@ class Telegram:
 
     async def send_message(self, chat_id: int, text: str):
         r = await self.client.post("sendMessage", data={"chat_id": chat_id, "text": text})
-
         return r.json()
