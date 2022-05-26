@@ -36,6 +36,8 @@ class TestSettings(BaseSettings):
 def get_setting():
     if os.getenv("APP_ENV", "dev").lower() == "dev":
         return TestSettings()
+    else:
+        return Setting()
 
 
 settings = get_setting()
