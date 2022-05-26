@@ -13,12 +13,18 @@ app.add_middleware(
 )
 
 
-# @app.on_event("startup")
-# def on_startup():
-#     from app.database import engine
-#     from app import models
+@app.on_event("startup")
+async def startup_event():
+    from app.config import settings
+    from app.database import Base, engine, get_db
 
-#     models.Base.metadata.create_all(bind=engine)
+    session = next(get_db())
+    try:
+        session.execute(f"CREATE DATABASE IF NOT EXISTS {settings.DB_NAME};")
+    finally:
+        session.close()
+
+    Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
