@@ -14,7 +14,9 @@
     "python.formatting.blackArgs": [
         "--line-length",
         "110"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/9e7a7226-c40b-4304-9aef-231dbd493e34/resourceGroups/quizbot/subscriptions/9e7a7226-c40b-4304-9aef-231dbd493e34/resourceGroups/quizbot/providers/Microsoft.Web/sites/bm-quizbot",
+    "appService.deploySubpath": "."
 }
 // // .vscode/settings.json
 // {
