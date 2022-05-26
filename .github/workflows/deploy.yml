@@ -1,0 +1,48 @@
+name: DEPLOY
+
+on:
+  #trigger
+  workflow_run:
+    workflows: ["TEST"]
+    branches: [release]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: quizbot.azurecr.io
+      IMAGE_NAME: quizbot
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY }}
+          username: ${{ secrets.AZURE_USERNAME }}
+          password: ${{ secrets.AZURE_PASSWORD }}
+      - run: |
+          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} .
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      # webhook 등록 안했을시
+      # - uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: quizbot
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
