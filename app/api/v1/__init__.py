@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
-from . import webhook, user, quiz
-
+from . import quiz, user, webhook
 
 router = APIRouter()
 router.include_router(webhook.router, prefix="/webhook")

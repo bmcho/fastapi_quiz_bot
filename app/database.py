@@ -1,11 +1,10 @@
 from distutils.command.config import config
-from turtle import setheading
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from app.config import settings
-
 
 engine = create_engine(
     "mysql+pymysql://{username}:{password}@{host}:{port}/{name}".format(
