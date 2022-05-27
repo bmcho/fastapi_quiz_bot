@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="theme">
+        <h1>🔒 로그인하기</h1>
+        <script async src="https://telegram.org/js/telegram-widget.js?15" data-telegram-login="bmcho_quiz_bot"
+            data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write">
+            </script>
+    </div>
+    <script type="text/javascript">
+        function onTelegramAuth(user) {
+            data = JSON.stringify(user)
+            fetch('/v1/auth', {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: data
+            }).then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('network error');
+            }).then(data => {
+                sessionStorage.setItem("token", data.token);
+                location.replace("/static/quiz.html")
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    </script>
+</body>
+
+</html>

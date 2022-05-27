@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from app.config import settings
 
 engine = create_engine(
-    "mysql+pymysql://{username}:{password}@{host}:{port}/{name}".format(
+    "mysql+pymysql://{username}:{password}@{host}:{port}/{name}?charset=utf8mb4".format(
         username=settings.DB_USERNAME,
         password=settings.DB_PASSWORD.get_secret_value(),
         host=settings.DB_HOST,
