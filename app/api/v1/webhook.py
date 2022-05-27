@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Body, Depends, Request
-from pydantic import HttpUrl
-from sqlalchemy import func
-from sqlalchemy.orm.session import Session
-
 from app import models, schemas
 from app.config import settings
 from app.database import get_db
 from app.lib import telegram
+from fastapi import APIRouter, Body, Depends, Request
+from pydantic import HttpUrl
+from sqlalchemy import func
+from sqlalchemy.orm.session import Session
 
 router = APIRouter()
 bot = telegram.Telegram(settings.TELEGRAM_BOT_TOKEN)
