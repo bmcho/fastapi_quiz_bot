@@ -2241,6 +2241,14 @@ python-versions = "*"
 six = ">=1.4.0"
 
 [[package]]
+name = "python-telegram-auth"
+version = "0.0.1"
+description = "Implementation of Telegram authorization for websites"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pywin32"
 version = "304"
 description = "Python for Window Extensions"
@@ -2507,7 +2515,7 @@ python-versions = ">=3.4"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.5"
-content-hash = "80da17e3399a2bc62ca597a516b8e6c14fa64b4aba6b99e14e2fc18e611bd7bd"
+content-hash = "ca81acadaa82ecdcd26e65cb00c55a9d74e3eabe483b0f6c975d87704c5f62f3"
 
 [metadata.files]
 adal = [
@@ -3460,6 +3468,9 @@ python-jose = [
 ]
 python-multipart = [
     {file = "python-multipart-0.0.5.tar.gz", hash = "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"},
+]
+python-telegram-auth = [
+    {file = "python_telegram_auth-0.0.1-py3-none-any.whl", hash = "sha256:1cec75243f48456c2bf268268be680170affac355296ba4edd079234eee84a3b"},
 ]
 pywin32 = [
     {file = "pywin32-304-cp310-cp310-win32.whl", hash = "sha256:3c7bacf5e24298c86314f03fa20e16558a4e4138fc34615d7de4070c23e65af3"},

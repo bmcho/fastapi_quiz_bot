@@ -18,9 +18,11 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.on_event("startup")
 async def startup_event():
-    from app.database import Base, engine, get_db
+    print("event on : startup")
+    from app.database import Base, engine
 
     Base.metadata.create_all(bind=engine)
+    print("event end : startup")
 
 
 @app.get("/")

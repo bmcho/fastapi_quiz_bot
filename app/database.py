@@ -6,6 +6,8 @@ from sqlalchemy.orm import sessionmaker
 
 from app.config import settings
 
+print("set database")
+
 engine = create_engine(
     "mysql+pymysql://{username}:{password}@{host}:{port}/{name}?charset=utf8mb4".format(
         username=settings.DB_USERNAME,
@@ -14,7 +16,7 @@ engine = create_engine(
         port=settings.DB_PORT,
         name=settings.DB_NAME,
     ),
-    connect_args={"ssl": {"ca": "/app/ca.pem"}} if os.getenv("APP_ENV") == "prod" else {},
+    connect_args={"ssl": {"ca": "ca.pem"}} if os.getenv("APP_ENV") == "prod" else {},
 )
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
