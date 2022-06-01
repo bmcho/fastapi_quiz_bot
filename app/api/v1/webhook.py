@@ -35,7 +35,6 @@ async def set_webhook(url: HttpUrl = Body(..., embed=True)):
 
 @router.post(f"/webhook-token")
 async def webhook(request: Request, db: Session = Depends(get_db)):
-    print("webhook start")
     req = await request.json()
     print(req)
     update = telegram.schemas.Update.parse_obj(req)

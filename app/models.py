@@ -19,7 +19,7 @@ class BaseMixin:
 class User(BaseMixin, Base):
     __tablename__ = "user"
 
-    quiz_id = Column(Integer, ForeignKey("quiz.id"), nullable=True)
+    quiz_id = Column(BigInteger, ForeignKey("quiz.id"), nullable=True)
     username = Column(String(100), nullable=False)
     first_name = Column(String(100))
     last_name = Column(String(100))

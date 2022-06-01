@@ -5,13 +5,14 @@ from fastapi.staticfiles import StaticFiles
 from app import api
 
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins={"https://db-quizbot.mysql.database.azure.com", "http://localhost"},
-    allow_credentials=True,
-    allow_methods={"OPTION", "GET", "POST"},
-    allow_headers={"*"},
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     # allow_origins={"https://db-quizbot.mysql.database.azure.com", "http://localhost"},
+#     allow_origins={"*"},
+#     allow_credentials=True,
+#     allow_methods={"OPTION", "GET", "POST"},
+#     allow_headers={"*"},
+# )
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
