@@ -11,7 +11,6 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
 from jose.exceptions import ExpiredSignatureError
 from pydantic.main import BaseModel
-from python_telegram_auth import verify_auth_data
 from sqlalchemy.orm.session import Session
 
 security = HTTPBearer()
