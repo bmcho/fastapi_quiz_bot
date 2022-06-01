@@ -6,7 +6,6 @@ from app.database import Base
 
 
 class BaseMixin:
-    id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, nullable=False, default=func.utc_timestamp())
     updated_at = Column(
         DateTime,
@@ -19,7 +18,8 @@ class BaseMixin:
 class User(BaseMixin, Base):
     __tablename__ = "user"
 
-    quiz_id = Column(BigInteger, ForeignKey("quiz.id"), nullable=True)
+    id = Column(BigInteger, primary_key=True, index=True)
+    quiz_id = Column(Integer, ForeignKey("quiz.id"), nullable=True)
     username = Column(String(100), nullable=False)
     first_name = Column(String(100))
     last_name = Column(String(100))
@@ -31,6 +31,7 @@ class User(BaseMixin, Base):
 class Quiz(BaseMixin, Base):
     __tablename__ = "quiz"
 
+    id = Column(Integer, primary_key=True, index=True)
     question = Column(Text, nullable=False)
     content = Column(Text, nullable=False)
     answer = Column(Integer, nullable=False)
