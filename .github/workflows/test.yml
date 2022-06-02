@@ -2,9 +2,6 @@ name: TEST
 
 on: push
 
-env:
-  APP_ENV: dev
-
 jobs:
   test:
     runs-on: ubuntu-latest
