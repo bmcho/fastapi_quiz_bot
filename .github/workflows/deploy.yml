@@ -8,6 +8,9 @@ on:
     types:
       - completed
 
+env:
+  APP_ENV: prod
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
