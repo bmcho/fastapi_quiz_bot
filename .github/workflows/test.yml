@@ -3,7 +3,7 @@ name: TEST
 on: push
 
 env:
-  APP_ENV: test
+  APP_ENV: dev
 
 jobs:
   test:
